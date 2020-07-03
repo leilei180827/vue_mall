@@ -1,7 +1,14 @@
 <template>
-  <div class="tab-item">
-    <!-- <img :src="" alt=""> -->
-    <span :class="{ active: isActive }">{{ title }}</span>
+  <div class="tab-item" @click="itemClick">
+    <div class="item-icon" v-show="!isActive">
+      <slot name="item-icon"></slot>
+    </div>
+    <div class="item-icon-active" v-show="isActive">
+      <slot name="item-icon-active"></slot>
+    </div>
+    <div class="item-text" :class="activeStyle">
+      <slot name="item-text"></slot>
+    </div>
   </div>
 </template>
 
@@ -9,15 +16,23 @@
 export default {
   name: "TabBarItem",
   props: {
-    title: {
+    link: {
       type: String,
       default: "",
     },
   },
-  data() {
-    return {
-      isActive: true,
-    };
+  computed: {
+    isActive() {
+      return this.$route.path.indexOf(this.link) !== -1;
+    },
+    activeStyle() {
+      return this.isActive ? 'active' : ''
+    },
+  },
+  methods: {
+    itemClick() {
+      this.$router.push(this.link);
+    },
   },
 };
 </script>
@@ -26,12 +41,18 @@ export default {
 .tab-item {
   flex: 1;
 }
-.tab-item span {
-  color: black;
-  font-size: 16px;
+.tab-item .item-text {
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
-.tab-item .active {
-  /* color:var(--color-tint) */
-  color: pink;
+.item-icon img,
+.item-icon-active img {
+  width: 24px;
+  height: 24px;
+  margin-top: 3px;
+  vertical-align: middle;
+}
+.active {
+  color: var(--color-tint);
 }
 </style>
