@@ -20,7 +20,7 @@ export default {
 
 <style scoped>
 .navbar {
-  padding: 3px 0 3px;
+  padding: 0 0 3px;
   display: flex;
   position: relative;
   height: 44px;

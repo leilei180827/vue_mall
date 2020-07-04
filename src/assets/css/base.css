@@ -15,10 +15,15 @@
   box-sizing: border-box;
 }
 body {
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-    user-select: none; /* user selecting img not allowed */
-    -webkit-tap-highlight-color: transparent; /* webkit apple phone */
-    background: var(--color-background);
-    color: var(--color-text);
-    width: 100vw;
-  }
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  user-select: none; /* user selecting img not allowed */
+  -webkit-tap-highlight-color: transparent; /* webkit apple phone */
+  background: var(--color-background);
+  color: var(--color-text);
+  width: 100vw;
+}
+a {
+  color: var(--color-text);
+  text-decoration: none;
+}
