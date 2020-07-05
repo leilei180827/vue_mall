@@ -26,7 +26,7 @@ export default {
       return this.$route.path.indexOf(this.link) !== -1;
     },
     activeStyle() {
-      return this.isActive ? 'active' : ''
+      return this.isActive ? "active" : "";
     },
   },
   methods: {
@@ -44,6 +44,8 @@ export default {
 .tab-item .item-text {
   margin-top: 1px;
   margin-bottom: 1px;
+  font-weight: 700;
+  font-size:16px;
 }
 .item-icon img,
 .item-icon-active img {

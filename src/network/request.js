@@ -1,8 +1,8 @@
 import axios from "axios";
 export function request(option) {
   const instance = axios.create({
-    baseURL: "http://123.207.32.32:8000",
-    timeout: 5000,
+    baseURL: "http://152.136.185.210:8000/api/n3",
+    timeout: 10000,
   });
 
   //  intercept axios request in order to apply rules like token/loading icon for requests
@@ -22,7 +22,7 @@ export function request(option) {
     },
     (err) => {
       if (err && err.response) {
-        switch (err.response.status) { 
+        switch (err.response.status) {
           case 400:
             err.message = "wrong request";
             break;

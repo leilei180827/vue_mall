@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: "NavBar"
+  name: "NavBar",
 };
 </script>
 
@@ -26,6 +26,7 @@ export default {
   height: 44px;
   text-align: center;
   align-items: center;
+  z-index: 10;
 }
 .left,
 .right {

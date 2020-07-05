@@ -40,8 +40,8 @@ export default {
 <style scoped>
 .features {
   display: flex;
-
   margin-top: 5px;
+  margin-bottom: 20px;
 }
 .feature-item {
   flex: 1;

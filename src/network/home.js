@@ -4,3 +4,12 @@ export function getMultiData() {
     url: "/home/multidata",
   });
 }
+export function getProductsData(type, page) {
+  return request({
+    url: "home/data",
+    params: {
+      type,
+      page,
+    },
+  });
+}
