@@ -48,7 +48,7 @@ export default {
     refresh() {
       this.scroll && this.scroll.refresh();
     },
-    scrollTo(x, y, time) {
+    scrollTo(x, y, time=300) {
       this.scroll && this.scroll.scrollTo(x, y, time);
     },
     finishPullingUp() {

@@ -20,20 +20,20 @@ export default {
       type: Array,
       default() {
         return [];
-      },
-    },
+      }
+    }
   },
   data() {
     return {
-      currentIndex: 0,
+      currentIndex: 0
     };
   },
   methods: {
     tabItemClick(index) {
       this.currentIndex = index;
       this.$emit("tabItemClick", this.titles[index]);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -42,16 +42,17 @@ export default {
   display: flex;
   text-align: center;
   justify-content: space-around;
-  margin-top: 10px;
+  background: #fff;
 }
 .tab-control-item {
   flex: 1;
+  padding: 5px;
 }
 .tab-control-item span {
-  padding: 3px;
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 700;
+  padding: 2px;
 }
 
 .active span {

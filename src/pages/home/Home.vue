@@ -1,6 +1,12 @@
 <template>
   <div id="home">
     <HomeNavBar />
+    <TabControl
+      class="tabControlFixed"
+      :titles="Object.keys(products)"
+      @tabItemClick="tabItemClick"
+      v-show="isTabControlFixed"
+    ></TabControl>
     <Scroll
       class="scroll-area"
       :probeType="3"
@@ -11,19 +17,15 @@
     >
       <div>
         <Swiper :banners="banners" @imageLoad="imageLoad"></Swiper>
-        <HomeFeatures
-          :recommends="features"
-          @imageLoad="imageLoad"
-        ></HomeFeatures>
+        <HomeFeatures :recommends="features" @imageLoad="imageLoad"></HomeFeatures>
         <HomeRecommend></HomeRecommend>
-        <TabControl
-          :titles="Object.keys(products)"
-          @tabItemClick="tabItemClick"
-          ref="tabControl"
-        ></TabControl>
+        <TabControl :titles="Object.keys(products)" @tabItemClick="tabItemClick" ref="tabControl"></TabControl>
         <HomeProducts :products="products[currentType].list"></HomeProducts>
       </div>
     </Scroll>
+    <BackToTop class="backtop-area" v-show="isShowBackTop" @backToTop="backToTop">
+      <img src="~assets/img/common/top.png" alt />
+    </BackToTop>
   </div>
 </template>
 
@@ -34,6 +36,7 @@ import HomeRecommend from "./homeChildren/HomeRecommend";
 import HomeProducts from "./homeChildren/HomeProducts";
 import Swiper from "components/common/swiper/Swiper.vue";
 import Scroll from "components/common/scroll/Scroll.vue";
+import BackToTop from "components/content/backToTop/BackToTop.vue";
 import TabControl from "components/content/tabControl/TabControl.vue";
 
 import { getMultiData, getProductsData } from "network/home.js";
@@ -47,7 +50,8 @@ export default {
     HomeProducts,
     Swiper,
     Scroll,
-    TabControl,
+    BackToTop,
+    TabControl
   },
   data() {
     return {
@@ -56,31 +60,34 @@ export default {
       products: {
         pop: { page: 1, list: [] },
         sell: { page: 1, list: [] },
-        new: { page: 1, list: [] },
+        new: { page: 1, list: [] }
       },
       currentType: "pop",
+      isShowBackTop: false,
+      showBackTopBoundary: 1000,
+      isTabControlFixed: false
     };
   },
   created() {
     this.getMultiData();
-    Object.keys(this.products).map((item) => this.getProductsData(item));
+    Object.keys(this.products).map(item => this.getProductsData(item));
   },
   methods: {
     getMultiData() {
       getMultiData()
         .then(({ data }) => {
-          data.banner.list.map((item) => this.banners.push(item.image));
+          data.banner.list.map(item => this.banners.push(item.image));
           // this.banners = data.banner.list;
-          data.recommend.list.map((item) =>
+          data.recommend.list.map(item =>
             this.features.push({
               image: item.image,
               title: item.title,
-              link: item.link,
+              link: item.link
             })
           );
           // this.recommends = data.recommend.list;
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
     },
     getProductsData(type) {
       getProductsData(type, this.products[type].page)
@@ -89,15 +96,20 @@ export default {
           this.products[type].list.push(...list);
           console.log(this.products[type].list);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     tabItemClick(type) {
       this.currentType = type;
     },
+    backToTop() {
+      // console.log("click on backtotop");
+      this.$refs.scrollArea.scrollTo(0, 0, 10);
+    },
     scrollMove(pos) {
-      console.log(pos);
+      this.isShowBackTop = pos.y < -1 * this.showBackTopBoundary;
+      this.isTabControlFixed = pos.y < -1 * this.$refs.tabControl.$el.offsetTop;
     },
     scrollPullingUp() {
       console.log("upload");
@@ -109,8 +121,8 @@ export default {
     },
     imageLoad() {
       console.log("image loaded");
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -119,11 +131,30 @@ export default {
   /* position: relative; */
   height: 100vh;
 }
+.tabControlFixed {
+  position: relative;
+  background: #fff;
+  z-index: 10;
+}
+/* .tabControlFixed {
+  position: fixed;
+  top: 44px;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background:#fff
+} */
 .scroll-area {
   position: absolute;
   left: 0;
   right: 0;
   top: 44px;
   bottom: 49px;
+}
+.backtop-area {
+  position: absolute;
+  right: 10px;
+  bottom: 60px;
+  z-index: 3;
 }
 </style>
