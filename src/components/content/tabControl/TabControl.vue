@@ -7,7 +7,7 @@
       :key="index"
       @click="tabItemClick(index)"
     >
-      <span>{{ item }}</span>
+      <span :style="customTextStyling">{{ item }}</span>
     </div>
   </div>
 </template>
@@ -20,6 +20,12 @@ export default {
       type: Array,
       default() {
         return [];
+      }
+    },
+    customTextStyling: {
+      type: Object,
+      default() {
+        return {};
       }
     }
   },

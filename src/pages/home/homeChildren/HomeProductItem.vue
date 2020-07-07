@@ -1,5 +1,5 @@
 <template>
-  <div class="product-item" @productClick="productClick">
+  <div class="product-item" @click="productClick">
     <img :src="productItem.show.img" alt />
     <div class="product-text">
       <p>{{productItem.title}}</p>
@@ -22,8 +22,8 @@ export default {
   },
   methods: {
     productClick() {
-      console.log("redirect to detail page");
-      //   this.$router.push("/detail/" + this.productItem.iid);
+      console.log(this.productItem.iid);
+      this.$router.push("/detail/" + this.productItem.iid);
     }
   }
 };

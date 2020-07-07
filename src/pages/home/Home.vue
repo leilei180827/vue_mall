@@ -16,7 +16,7 @@
       ref="scrollArea"
     >
       <div>
-        <Swiper :banners="banners" @imageLoad="imageLoad"></Swiper>
+        <Swiper :swiperImages="banners" @imageLoad="imageLoad"></Swiper>
         <HomeFeatures :recommends="features" @imageLoad="imageLoad"></HomeFeatures>
         <HomeRecommend></HomeRecommend>
         <TabControl :titles="Object.keys(products)" @tabItemClick="tabItemClick" ref="tabControl"></TabControl>
@@ -134,7 +134,7 @@ export default {
 .tabControlFixed {
   position: relative;
   background: #fff;
-  z-index: 10;
+  z-index: 1;
 }
 /* .tabControlFixed {
   position: fixed;
@@ -155,6 +155,6 @@ export default {
   position: absolute;
   right: 10px;
   bottom: 60px;
-  z-index: 3;
+  z-index: 1;
 }
 </style>
