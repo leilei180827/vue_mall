@@ -7,6 +7,11 @@ export function getDetail(iid) {
     },
   });
 }
+export function getRecommend() {
+  return request({
+    url: "/recommend",
+  });
+}
 //categorize multiple infos into single object
 export class BasicInfo {
   constructor(itemInfo, columns, services) {

@@ -9,6 +9,7 @@
           :titles="titles"
           @tabItemClick="tabItemClick"
           :customTextStyling="customTextStyling"
+          :currentIndex="currentIndex"
         ></TabControl>
       </div>
     </NavBar>
@@ -27,6 +28,10 @@ export default {
       default() {
         return ["images", "details", "comments", "similars"];
       }
+    },
+    currentIndex: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -51,7 +56,11 @@ export default {
 
 <style scoped>
 .detail-navbar {
+  position: relative;
   padding-top: 2px;
+  height: 44px;
+  background: #fff;
+  z-index: 1;
 }
 .nav-left {
   margin-top: 6px;

@@ -27,17 +27,15 @@ export default {
       default() {
         return {};
       }
+    },
+    currentIndex:{
+      type:Number,
+      default:0
     }
-  },
-  data() {
-    return {
-      currentIndex: 0
-    };
   },
   methods: {
     tabItemClick(index) {
-      this.currentIndex = index;
-      this.$emit("tabItemClick", this.titles[index]);
+      this.$emit("tabItemClick", this.titles[index],index);
     }
   }
 };

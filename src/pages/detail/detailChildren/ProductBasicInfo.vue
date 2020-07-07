@@ -33,9 +33,6 @@ export default {
     return {
       columns: []
     };
-  },
-  mounted() {
-    console.log(this.info);
   }
 };
 </script>
@@ -43,14 +40,14 @@ export default {
 <style scoped>
 .product-basic-info {
   margin-top: 15px;
-  padding: 0 8px;
+  padding: 0 8px 5px;
   color: #999;
-  border-bottom: 5px solid #f2f5f8;
+  border-bottom: 3px solid var(--color-border-bottom);
 }
 .title {
   font-weight: 600;
   margin: 5px 0 10px;
-  color: var(--color-text);
+  color: var(--color-title);
 }
 .prices {
   margin-bottom: 10px;
@@ -76,7 +73,7 @@ export default {
   margin-bottom: 8px;
   justify-content: space-between;
   font-size: 13px;
-  border-bottom: 1px solid rgba(100, 100, 100, 0.2);
+  border-bottom: 1px solid rgba(100, 100, 100, 0.3);
   line-height: 30px;
 }
 .info-other {
@@ -90,7 +87,7 @@ export default {
   justify-content: space-between;
   line-height: 60px;
   flex-wrap: wrap;
-  border-bottom: 1px solid rgba(100, 100, 100, 0.2);
+  border-bottom: 1px solid rgba(100, 100, 100, 0.3);
 }
 .service {
   width: fit-content;

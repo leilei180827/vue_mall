@@ -9,7 +9,7 @@ export default {
   name: "BackToTop",
   methods: {
     backToTop() {
-    //   console.log("click on backtotop");
+      //   console.log("click on backtotop");
       this.$emit("backToTop");
     }
   }

@@ -4,6 +4,7 @@
     <TabControl
       class="tabControlFixed"
       :titles="Object.keys(products)"
+      :currentIndex="currentIndex"
       @tabItemClick="tabItemClick"
       v-show="isTabControlFixed"
     ></TabControl>
@@ -19,8 +20,13 @@
         <Swiper :swiperImages="banners" @imageLoad="imageLoad"></Swiper>
         <HomeFeatures :recommends="features" @imageLoad="imageLoad"></HomeFeatures>
         <HomeRecommend></HomeRecommend>
-        <TabControl :titles="Object.keys(products)" @tabItemClick="tabItemClick" ref="tabControl"></TabControl>
-        <HomeProducts :products="products[currentType].list"></HomeProducts>
+        <TabControl
+          :titles="Object.keys(products)"
+          :currentIndex="currentIndex"
+          @tabItemClick="tabItemClick"
+          ref="tabControl"
+        ></TabControl>
+        <Products :products="products[currentType].list"></Products>
       </div>
     </Scroll>
     <BackToTop class="backtop-area" v-show="isShowBackTop" @backToTop="backToTop">
@@ -33,9 +39,9 @@
 import HomeNavBar from "./homeChildren/HomeNavBar";
 import HomeFeatures from "./homeChildren/HomeFeatures";
 import HomeRecommend from "./homeChildren/HomeRecommend";
-import HomeProducts from "./homeChildren/HomeProducts";
 import Swiper from "components/common/swiper/Swiper.vue";
 import Scroll from "components/common/scroll/Scroll.vue";
+import Products from "components/content/products/Products";
 import BackToTop from "components/content/backToTop/BackToTop.vue";
 import TabControl from "components/content/tabControl/TabControl.vue";
 
@@ -47,9 +53,9 @@ export default {
     HomeNavBar,
     HomeFeatures,
     HomeRecommend,
-    HomeProducts,
     Swiper,
     Scroll,
+    Products,
     BackToTop,
     TabControl
   },
@@ -63,6 +69,7 @@ export default {
         new: { page: 1, list: [] }
       },
       currentType: "pop",
+      currentIndex: 0,
       isShowBackTop: false,
       showBackTopBoundary: 1000,
       isTabControlFixed: false
@@ -100,8 +107,9 @@ export default {
           console.log(err);
         });
     },
-    tabItemClick(type) {
+    tabItemClick(type, index) {
       this.currentType = type;
+      this.currentIndex = index;
     },
     backToTop() {
       // console.log("click on backtotop");
