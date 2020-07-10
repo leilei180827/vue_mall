@@ -23,7 +23,7 @@ export class BasicInfo {
     this.discountBgColor = itemInfo.discountBgColor;
     this.columns = columns;
     this.services = services;
-    this.nowPrice = itemInfo.highNowPrice;
+    this.nowPrice = itemInfo.lowNowPrice;
   }
 }
 export class SizeDetail {

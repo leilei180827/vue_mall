@@ -1,6 +1,10 @@
 <template>
   <div id="detail">
-    <DetailNavBar @tabItemClick="tabItemClick" :titles="titles" :currentIndex="currentIndex"></DetailNavBar>
+    <DetailNavBar
+      @tabItemClick="tabItemClick"
+      :titles="titles"
+      :currentIndex="currentIndex"
+    ></DetailNavBar>
     <Scroll
       :probeType="3"
       :pullUpLoad="true"
@@ -23,10 +27,14 @@
         <RecommendInfo :info="recommendList" ref="similar"></RecommendInfo>
       </div>
     </Scroll>
-    <BackToTop class="backtop-area" v-show="isShowBackTop" @backToTop="backToTop">
+    <BackToTop
+      class="backtop-area"
+      v-show="isShowBackTop"
+      @backToTop="backToTop"
+    >
       <img src="~assets/img/common/top.png" alt />
     </BackToTop>
-    <BottomBar class="bottom-bar"></BottomBar>
+    <BottomBar class="bottom-bar" @addToCart="addToCart"></BottomBar>
   </div>
 </template>
 
@@ -48,7 +56,7 @@ import {
   getRecommend,
   BasicInfo,
   SizeDetail,
-  ShopDetail
+  ShopDetail,
 } from "network/detail.js";
 export default {
   name: "Detail",
@@ -63,10 +71,11 @@ export default {
     BottomBar,
     Swiper,
     BackToTop,
-    Scroll
+    Scroll,
   },
   data() {
     return {
+      id: "",
       titles: ["gallery", "detail", "comment", "similar"],
       swiperImages: [],
       basicInfo: {},
@@ -78,7 +87,7 @@ export default {
       themeTops: [],
       currentIndex: 0,
       isShowBackTop: false,
-      showBackTopBoundary: 1000
+      showBackTopBoundary: 1000,
     };
   },
   methods: {
@@ -105,7 +114,7 @@ export default {
             this.commentInfo = result.rate.list[0];
           }
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     },
     getRecommend() {
       getRecommend()
@@ -113,7 +122,7 @@ export default {
           console.log(data);
           this.recommendList = data.list;
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     },
     imageLoad() {
       console.log("image loaded");
@@ -124,20 +133,6 @@ export default {
     scrollMove(pos) {
       this.isShowBackTop = pos.y < -1 * this.showBackTopBoundary;
       this.jumpToTheme(Math.abs(pos.y));
-      // let y = Math.abs(pos.y);
-      // if (this.themeTops[1] < y && y < this.themeTops[2]) {
-      //   this.currentIndex = 1;
-      // } else if (this.themeTops[2] < y && y < this.themeTops[3]) {
-      //   console.log(this.themeTops[2]);
-      //   console.log("themeTop-2");
-      //   this.currentIndex = 2;
-      // } else if (this.themeTops[3] < y) {
-      //   console.log("themeTop-3");
-      //   this.currentIndex = 3;
-      // } else {
-      //   console.log("themeTop-0");
-      //   this.currentIndex = 0;
-      // }
     },
     jumpToTheme(y) {
       for (let i = 0; i < this.themeTops.length - 1; i++) {
@@ -149,17 +144,30 @@ export default {
         }
       }
     },
-
+    addToCart() {
+      const product = {
+        iid: this.iid,
+        imgUrl: this.swiperImages[0],
+        title: this.basicInfo.title,
+        desc: this.basicInfo.desc,
+        price: this.basicInfo.nowPrice,
+        count: 1,
+      };
+      this.$store.dispatch("add_to_cart", product).then((res) => {
+        console.log(res);
+      });
+    },
     collectThemeTops() {
       this.themeTops = [];
-      this.titles.map(item => {
+      this.titles.map((item) => {
         this.themeTops.push(this.$refs[item].$el.offsetTop);
       });
       this.themeTops.push(Number.MAX_VALUE);
       console.log(this.themeTops);
-    }
+    },
   },
   created() {
+    this.iid = this.$route.params.iid;
     this.getDetail(this.$route.params.iid);
     this.getRecommend();
   },
@@ -168,7 +176,7 @@ export default {
   },
   updated() {
     this.collectThemeTops();
-  }
+  },
 };
 </script>
 

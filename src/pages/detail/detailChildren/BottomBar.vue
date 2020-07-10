@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="purchase">
-      <div class="add-cart">
+      <div class="add-cart" @click="addToCart">
         <span>add to cart</span>
       </div>
       <div class="checkout">
@@ -27,7 +27,13 @@
 
 <script>
 export default {
-  name: "BottomBar"
+  name: "BottomBar",
+  methods: {
+    addToCart() {
+      console.log("add to cart");
+      this.$emit("addToCart");
+    },
+  },
 };
 </script>
 
