@@ -26,6 +26,7 @@
     <BackToTop class="backtop-area" v-show="isShowBackTop" @backToTop="backToTop">
       <img src="~assets/img/common/top.png" alt />
     </BackToTop>
+    <BottomBar class="bottom-bar"></BottomBar>
   </div>
 </template>
 
@@ -37,6 +38,7 @@ import ProductSizeInfo from "./detailChildren/ProductSizeInfo";
 import ShopInfo from "./detailChildren/ShopInfo";
 import CommentInfo from "./detailChildren/CommentInfo";
 import RecommendInfo from "./detailChildren/RecommendInfo";
+import BottomBar from "./detailChildren/BottomBar";
 import Swiper from "components/common/swiper/Swiper.vue";
 import BackToTop from "components/content/backToTop/BackToTop";
 import Scroll from "components/common/scroll/Scroll";
@@ -58,6 +60,7 @@ export default {
     ShopInfo,
     CommentInfo,
     RecommendInfo,
+    BottomBar,
     Swiper,
     BackToTop,
     Scroll
@@ -185,12 +188,23 @@ export default {
   left: 0;
   right: 0;
   top: 44px;
-  bottom: 0;
+  bottom: 49px;
 }
 .backtop-area {
   position: absolute;
   right: 10px;
   bottom: 60px;
   z-index: 1;
+}
+.bottom-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 49px;
+  z-index: 1;
+  background: #fff;
+  border-top: 1px solid #eee;
+  box-shadow: 0px -1px 1px rgba(150, 150, 150, 0.08);
 }
 </style>
