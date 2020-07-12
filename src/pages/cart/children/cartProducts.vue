@@ -5,7 +5,6 @@
         v-for="(item,index) in productsInCart"
         :key="index"
         :product="item"
-        @itemTick="itemTick"
       ></CartProductItem>
     </div>
   </Scroll>
@@ -18,21 +17,10 @@ import { mapGetters } from "vuex";
 export default {
   name: "CartProducts",
   components: { CartProductItem, Scroll },
-  data() {
-    return {
-      isAllSelected: true
-    };
-  },
   computed: {
     ...mapGetters(["productsInCart"])
   },
-  methods: {
-    itemTick() {
-      this.isAllSelected = this.productsInCart.find(item => !item.isSelected)
-        ? false
-        : true;
-    }
-  }
+
 };
 </script>
 

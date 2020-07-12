@@ -1,8 +1,10 @@
 <template>
   <div class="cart-product-item">
-    <div class="selector" @click="itemTicked" :class="{active:isSelected}">
+    <CheckButton class="selector" @tickClick="tickClick" :isSelected="isSelected"></CheckButton>
+
+    <!-- <div class="selector" @click="itemTicked" :class="{active:isSelected}">
       <img src="~assets/img/cart/tick.svg" alt />
-    </div>
+    </div>-->
     <div class="image">
       <img :src="product.imgUrl" alt @load="imageLoad" />
     </div>
@@ -18,8 +20,10 @@
 </template>
 
 <script>
+import CheckButton from "./CheckButton";
 export default {
   name: "CartProductItem",
+  components: { CheckButton },
   props: {
     product: {
       type: Object,
@@ -37,9 +41,8 @@ export default {
     imageLoad() {
       console.log("image load");
     },
-    itemTicked() {
+    tickClick() {
       this.product.isSelected = !this.product.isSelected;
-      this.$emit("itemTick");
     }
   }
 };
@@ -53,17 +56,17 @@ export default {
 }
 .selector {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-self: center;
+  align-self: center;
   margin: 0 3px;
 }
-.selector img {
+/* .selector img {
   width: 18px;
   height: 18px;
   border: 1px solid #ccc;
   border-radius: 50%;
   cursor: pointer;
-}
+} */
 .image img {
   width: 80px;
   height: 100px;
