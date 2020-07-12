@@ -39,14 +39,16 @@
 </template>
 
 <script>
-import DetailNavBar from "./detailChildren/DetailNavBar";
-import ProductBasicInfo from "./detailChildren/ProductBasicInfo";
-import ProductDetailInfo from "./detailChildren/ProductDetailInfo";
-import ProductSizeInfo from "./detailChildren/ProductSizeInfo";
-import ShopInfo from "./detailChildren/ShopInfo";
-import CommentInfo from "./detailChildren/CommentInfo";
-import RecommendInfo from "./detailChildren/RecommendInfo";
-import BottomBar from "./detailChildren/BottomBar";
+import {
+  BottomBar,
+  CommentInfo,
+  DetailNavBar,
+  ProductBasicInfo,
+  ProductDetailInfo,
+  ProductSizeInfo,
+  RecommendInfo,
+  ShopInfo,
+} from "./children";
 import Swiper from "components/common/swiper/Swiper.vue";
 import BackToTop from "components/content/backToTop/BackToTop";
 import Scroll from "components/common/scroll/Scroll";
@@ -152,6 +154,7 @@ export default {
         desc: this.basicInfo.desc,
         price: this.basicInfo.nowPrice,
         count: 1,
+        isSelected: true,
       };
       this.$store.dispatch("add_to_cart", product).then((res) => {
         console.log(res);

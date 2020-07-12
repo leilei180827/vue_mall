@@ -18,7 +18,7 @@
       <div class="add-cart" @click="addToCart">
         <span>add to cart</span>
       </div>
-      <div class="checkout">
+      <div class="checkout" @click="goToCart">
         <span>checkout</span>
       </div>
     </div>
@@ -33,6 +33,9 @@ export default {
       console.log("add to cart");
       this.$emit("addToCart");
     },
+    goToCart(){
+      this.$router.push("/cart");
+    }
   },
 };
 </script>

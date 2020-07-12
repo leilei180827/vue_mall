@@ -11,22 +11,23 @@ export default {
   props: {
     probeType: {
       type: Number,
-      default: 1,
+      default: 1
     },
     pullUpLoad: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   data() {
     return {
-      scroll: {},
+      scroll: {}
     };
   },
   mounted() {
-    setTimeout(() => {
-      this.initScroll();
-    }, 20);
+    this.initScroll();
+    // setTimeout(() => {
+    //   this.initScroll();
+    // }, 100);
   },
   methods: {
     initScroll() {
@@ -35,10 +36,10 @@ export default {
       this.scroll = new Bscroll(this.$refs.scrollWrapper, {
         click: true,
         pullUpLoad: this.pullUpLoad,
-        probeType: this.probeType,
+        probeType: this.probeType
       });
       console.log(this.scroll);
-      this.scroll.on("scroll", (pos) => {
+      this.scroll.on("scroll", pos => {
         this.$emit("scroll", pos);
       });
       this.scroll.on("pullingUp", () => {
@@ -48,13 +49,13 @@ export default {
     refresh() {
       this.scroll && this.scroll.refresh();
     },
-    scrollTo(x, y, time=300) {
+    scrollTo(x, y, time = 300) {
       this.scroll && this.scroll.scrollTo(x, y, time);
     },
     finishPullingUp() {
       this.scroll && this.scroll.finishPullUp();
-    },
-  },
+    }
+  }
 };
 </script>
 
