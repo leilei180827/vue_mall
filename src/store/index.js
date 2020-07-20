@@ -6,6 +6,7 @@ import getters from "./getters";
 Vue.use(Vuex);
 const state = {
   productsInCart: [],
+  count: 0,
 };
 const product = {
   iid: "1m7s9c4",

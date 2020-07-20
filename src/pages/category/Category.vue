@@ -7,12 +7,12 @@
         <div>
           <SubMenuCategory :subCategories="showSubCategories"></SubMenuCategory>
           <TabControl
-          :titles="['sell','pop','new']"
-          :currentIndex="currentTabIndex"
-          @tabItemClick="tabItemClick"
-          ref="tabControl"
-        ></TabControl>
-          <SubMenuDetail ></SubMenuDetail>
+            :titles="['sell','pop','new']"
+            :currentIndex="currentTabIndex"
+            @tabItemClick="tabItemClick"
+            ref="tabControl"
+          ></TabControl>
+          <SubMenuDetail></SubMenuDetail>
         </div>
       </Scroll>
     </div>
@@ -48,7 +48,7 @@ export default {
       categories: [],
       categoryData: {},
       currentIndex: -1,
-      currentTabIndex:0,
+      currentTabIndex: 0
     };
   },
   created() {
@@ -73,8 +73,7 @@ export default {
               pop: [],
               sell: [],
               new: []
-            },
-            isRequested: false
+            }
           };
         }
         this._getSubCategory(0);
@@ -82,17 +81,18 @@ export default {
     },
     _getSubCategory(index) {
       this.currentIndex = index;
+      console.log(this.categories[index].maitKey);
       getSubCategory(this.categories[index].maitKey)
-        .then(({ data }) => {
-          console.log(data);
+        .then(res => {
+          console.log(res);
           console.log("sub categories success");
-          this.categoryData[index].subCategories = data.list;
+          this.categoryData[index].subCategories = res.data.list;
           this.categoryData = { ...this.categoryData };
           // this.subCategories[index].isRequested = true;
           // this.subCategories = { ...this.subCategories };
-          // this._getSubCategoryDetail(index, "pop");
-          // this._getSubCategoryDetail(index, "sell");
-          // this._getSubCategoryDetail(index, "new");
+          this._getSubCategoryDetail(index, "pop");
+          this._getSubCategoryDetail(index, "sell");
+          this._getSubCategoryDetail(index, "new");
         })
         .catch(err => {
           console.log(err);
@@ -102,7 +102,9 @@ export default {
     _getSubCategoryDetail(index, type) {
       getSubCategoryDetail(this.categories[index].miniWallkey, type)
         .then(res => {
-          this.categoryData[index].categoryDetails[type] = res;
+          console.log("subCategory detail");
+          console.log(res);
+          this.categoryData[index].subCategoryDetails[type] = res;
           this.categoryData = { ...this.categoryData };
         })
         .catch(err => {
@@ -111,15 +113,15 @@ export default {
         });
     },
     sideMenuClick(index) {
+      console.log(index);
       console.log("index change");
-
-      if (!this.categoryData[index].isRequested) {
-        console.log("data request");
-        this._getSubCategory[index];
+      console.log(this.categoryData[index].subCategories);
+      if (this.categoryData[index].subCategories.length === 0) {
+        this._getSubCategory(index);
       }
     },
-    tabItemClick(type,index){
-      this.currentTabIndex=index;
+    tabItemClick(type, index) {
+      this.currentTabIndex = index;
     }
   }
 };

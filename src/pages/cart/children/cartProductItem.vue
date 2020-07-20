@@ -5,7 +5,9 @@
     <!-- <div class="selector" @click="itemTicked" :class="{active:isSelected}">
       <img src="~assets/img/cart/tick.svg" alt />
     </div>-->
-    <div class="image">
+    <!-- test vuex -->
+    <!-- <div class="image" @click="testVuex"> -->
+      <div class="image" >
       <img :src="product.imgUrl" alt @load="imageLoad" />
     </div>
     <div class="infos">
@@ -16,6 +18,8 @@
         <span class="count">*{{product.count}}</span>
       </div>
     </div>
+    <!-- test vuex -->
+    <!-- <div class="show">{{stateCountTemp}}</div> -->
   </div>
 </template>
 
@@ -30,12 +34,17 @@ export default {
       default() {
         return {};
       }
+    },
+    stateCountTemp: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
     isSelected: function() {
       return this.product.isSelected;
-    }
+    },
+
   },
   methods: {
     imageLoad() {
@@ -43,7 +52,12 @@ export default {
     },
     tickClick() {
       this.product.isSelected = !this.product.isSelected;
-    }
+    },
+    // testVuex() {
+    //   this.$store.state.count++;
+    //   console.log("test vue2");
+    //   console.log(this.$store.state);
+    // }
   }
 };
 </script>
