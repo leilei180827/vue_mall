@@ -43,7 +43,7 @@ export default {
 
 <style scoped>
 .wrapper {
-  width: 25%;
+  width: 100px;
   height: 100%;
   border-right: 1px solid rgba(100, 100, 100, 0.3);
 }
