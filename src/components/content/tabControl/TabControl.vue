@@ -28,14 +28,14 @@ export default {
         return {};
       }
     },
-    currentIndex:{
-      type:Number,
-      default:0
+    currentIndex: {
+      type: Number,
+      default: 0
     }
   },
   methods: {
     tabItemClick(index) {
-      this.$emit("tabItemClick", this.titles[index],index);
+      this.$emit("tabItemClick", this.titles[index], index);
     }
   }
 };

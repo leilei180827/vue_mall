@@ -20,6 +20,7 @@ export default {
       }
     }
   },
+  computed(){},
   methods: {
     productClick() {
       console.log(this.productItem.iid);

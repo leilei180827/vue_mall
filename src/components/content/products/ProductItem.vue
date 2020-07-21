@@ -22,6 +22,7 @@ export default {
   },
   computed: {
     getImage() {
+      console.log(this.productItem);
       return (
         this.productItem.img ||
         this.productItem.image ||

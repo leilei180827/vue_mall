@@ -1,20 +1,42 @@
 <template>
-  <div class="sub-menu-item">this is submenu item</div>
+  <!-- <div class="sub-menu-detail">
+    <ProductItem
+      v-for="(item,index) in products"
+      :key="index"
+      :productItem="item"
+      class="sub-menu-detail-item"
+    ></ProductItem>
+  </div>-->
+  <GridView :cols="2">
+    <ProductItem v-for="(item,index) in products" :key="index" :productItem="item"></ProductItem>
+  </GridView>
 </template>
 
 <script>
+import GridView from "components/common/gridView/GridView";
+import ProductItem from "components/content/products/ProductItem";
 export default {
   name: "SubMenuDetail",
+  components: { GridView, ProductItem },
   props: {
-    subCategoryDetails: {
-      type: Object,
+    products: {
+      type: Array,
       default() {
-        return {};
+        return [];
       }
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
+.sub-menu-detail {
+  display: flex;
+  justify-content: center;
+  row-gap: 5px;
+  column-gap: 3px;
+}
+.sub-menu-detail-item {
+  flex: 0 0 50%;
+}
 </style>

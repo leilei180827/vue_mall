@@ -7,12 +7,12 @@
         <div>
           <SubMenuCategory :subCategories="showSubCategories"></SubMenuCategory>
           <TabControl
-            :titles="['sell','pop','new']"
+            :titles="titles"
             :currentIndex="currentTabIndex"
             @tabItemClick="tabItemClick"
             ref="tabControl"
           ></TabControl>
-          <SubMenuDetail></SubMenuDetail>
+          <SubMenuDetail :products="showSubCategoryDetail"></SubMenuDetail>
         </div>
       </Scroll>
     </div>
@@ -28,6 +28,7 @@ import {
 } from "./children";
 import Scroll from "components/common/scroll/Scroll";
 import TabControl from "components/content/tabControl/TabControl";
+import { POP, SELL, NEW } from "utils/constants";
 import {
   getCategory,
   getSubCategory,
@@ -48,7 +49,8 @@ export default {
       categories: [],
       categoryData: {},
       currentIndex: -1,
-      currentTabIndex: 0
+      currentTabIndex: 0,
+      titles: [POP, SELL, NEW]
     };
   },
   created() {
@@ -59,6 +61,18 @@ export default {
       if (this.currentIndex === -1) return [];
       console.log(this.categoryData[this.currentIndex]);
       return this.categoryData[this.currentIndex].subCategories;
+    },
+    showSubCategoryDetail: function() {
+      if (
+        this.categoryData[this.currentIndex] &&
+        this.categoryData[this.currentIndex].subCategoryDetails
+      ) {
+        return this.categoryData[this.currentIndex].subCategoryDetails[
+          this.titles[this.currentTabIndex]
+        ];
+      } else {
+        return [];
+      }
     }
   },
   methods: {
@@ -70,9 +84,9 @@ export default {
           this.categoryData[i] = {
             subCategories: [],
             subCategoryDetails: {
-              pop: [],
-              sell: [],
-              new: []
+              [POP]: [],
+              [SELL]: [],
+              [NEW]: []
             }
           };
         }
@@ -88,11 +102,9 @@ export default {
           console.log("sub categories success");
           this.categoryData[index].subCategories = res.data.list;
           this.categoryData = { ...this.categoryData };
-          // this.subCategories[index].isRequested = true;
-          // this.subCategories = { ...this.subCategories };
-          this._getSubCategoryDetail(index, "pop");
-          this._getSubCategoryDetail(index, "sell");
-          this._getSubCategoryDetail(index, "new");
+          this._getSubCategoryDetail(index, POP);
+          this._getSubCategoryDetail(index, SELL);
+          this._getSubCategoryDetail(index, NEW);
         })
         .catch(err => {
           console.log(err);
@@ -109,19 +121,19 @@ export default {
         })
         .catch(err => {
           console.log(err);
+          this.categoryData[index].subCategoryDetails[type] = [];
+          this.categoryData = { ...this.categoryData };
           console.log("subcategory detail failure");
         });
     },
     sideMenuClick(index) {
-      console.log(index);
-      console.log("index change");
-      console.log(this.categoryData[index].subCategories);
+      this.currentIndex = index;
       if (this.categoryData[index].subCategories.length === 0) {
         this._getSubCategory(index);
       }
     },
-    tabItemClick(type, index) {
-      this.currentTabIndex = index;
+    tabItemClick(type, tabIndex) {
+      this.currentTabIndex = tabIndex;
     }
   }
 };
