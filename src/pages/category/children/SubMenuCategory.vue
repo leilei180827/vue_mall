@@ -30,6 +30,7 @@ export default {
   text-align: center;
   font-size: 12px;
   cursor: pointer;
+  width:100%;
 }
 img {
   width: 80%;

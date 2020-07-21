@@ -33,8 +33,4 @@ export default {
 </script>
 
 <style scoped>
-.products {
-  display: flex;
-  padding: 0 2px;
-}
 </style>

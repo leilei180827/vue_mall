@@ -4,7 +4,6 @@
     <TabControl
       class="tabControlFixed"
       :titles="Object.keys(products)"
-      :currentIndex="currentIndex"
       @tabItemClick="tabItemClick"
       v-show="isTabControlFixed"
     ></TabControl>
@@ -15,17 +14,13 @@
       @scroll="scrollMove"
       @pullingUp="scrollPullingUp"
       ref="scrollArea"
+      :data="products[currentType].list"
     >
       <div>
         <Swiper :swiperImages="banners" @imageLoad="imageLoad"></Swiper>
         <HomeFeatures :recommends="features" @imageLoad="imageLoad"></HomeFeatures>
         <HomeRecommend></HomeRecommend>
-        <TabControl
-          :titles="Object.keys(products)"
-          :currentIndex="currentIndex"
-          @tabItemClick="tabItemClick"
-          ref="tabControl"
-        ></TabControl>
+        <TabControl :titles="['pop','sell','new']" @tabItemClick="tabItemClick" ref="tabControl"></TabControl>
         <Products :products="products[currentType].list"></Products>
       </div>
     </Scroll>
@@ -46,6 +41,7 @@ import BackToTop from "components/content/backToTop/BackToTop.vue";
 import TabControl from "components/content/tabControl/TabControl.vue";
 
 import { getMultiData, getProductsData } from "network/home.js";
+import { POP, SELL, NEW } from "utils/constants";
 
 export default {
   name: "Home",
@@ -68,7 +64,7 @@ export default {
         sell: { page: 1, list: [] },
         new: { page: 1, list: [] }
       },
-      currentType: "pop",
+      currentType: POP,
       currentIndex: 0,
       isShowBackTop: false,
       showBackTopBoundary: 1000,
@@ -107,9 +103,20 @@ export default {
           console.log(err);
         });
     },
-    tabItemClick(type, index) {
-      this.currentType = type;
-      this.currentIndex = index;
+    tabItemClick(index) {
+      switch (index) {
+        case 0:
+          this.currentType = POP;
+          break;
+        case 1:
+          this.currentType = SELL;
+          break;
+        case 2:
+          this.currentType = NEW;
+          break;
+        default:
+          break;
+      }
     },
     backToTop() {
       // console.log("click on backtotop");

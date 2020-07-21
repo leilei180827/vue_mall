@@ -1,10 +1,11 @@
 <template>
   <div class="product-item" @click="productClick">
-    <img :src="getImage" alt />
+    <!-- <img  :src="getImage" alt /> -->
+    <img v-lazy="getImage" :key="getImage" alt />
     <div class="product-text">
-      <p>{{productItem.title}}</p>
-      <span class="price">￥{{productItem.price}}</span>
-      <span class="like">{{productItem.cfav}}</span>
+      <p>{{ productItem.title }}</p>
+      <span class="price">￥{{ productItem.price }}</span>
+      <span class="like">{{ productItem.cfav }}</span>
     </div>
   </div>
 </template>
@@ -17,8 +18,8 @@ export default {
       type: Object,
       default() {
         return {};
-      }
-    }
+      },
+    },
   },
   computed: {
     getImage() {
@@ -28,25 +29,33 @@ export default {
         this.productItem.image ||
         this.productItem.show.img
       );
-    }
+    },
   },
   methods: {
     productClick() {
       console.log(this.productItem.iid);
       this.$router.push("/detail/" + this.productItem.iid);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
+.product-item {
+  position: relative;
+  padding-bottom: 40px;
+}
 .product-item img {
   width: 100%;
-  margin-bottom: 10px;
 }
 .product-text {
+  font-size: 12px;
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  overflow: hidden;
   text-align: center;
-  font-size: 14px;
 }
 .product-text p {
   overflow: hidden;

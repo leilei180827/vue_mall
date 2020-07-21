@@ -7,7 +7,7 @@
       class="sub-menu-detail-item"
     ></ProductItem>
   </div>-->
-  <GridView :cols="2">
+  <GridView>
     <ProductItem v-for="(item,index) in products" :key="index" :productItem="item"></ProductItem>
   </GridView>
 </template>
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style scoped>
-.sub-menu-detail {
+/* .sub-menu-detail {
   display: flex;
   justify-content: center;
   row-gap: 5px;
@@ -38,5 +38,5 @@ export default {
 }
 .sub-menu-detail-item {
   flex: 0 0 50%;
-}
+} */
 </style>

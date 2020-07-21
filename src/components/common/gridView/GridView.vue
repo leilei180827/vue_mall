@@ -29,12 +29,12 @@ export default {
       default: 8
     }
   },
-  mounted() {
+  mounted:function() {
     setTimeout(() => {
       this.autolayout();
-    }, 100);
+    }, 20);
   },
-  updated() {
+  updated:function() {
     this.autolayout();
   },
   methods: {

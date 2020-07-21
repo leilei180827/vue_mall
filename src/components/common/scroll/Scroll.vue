@@ -16,6 +16,12 @@ export default {
     pullUpLoad: {
       type: Boolean,
       default: true
+    },
+    data: {
+      type: Array,
+      default: () => {
+        return [];
+      }
     }
   },
   data() {
@@ -54,6 +60,11 @@ export default {
     },
     finishPullingUp() {
       this.scroll && this.scroll.finishPullUp();
+    }
+  },
+  watch: {
+    data: function() {
+      setTimeout(this.refresh, 20);
     }
   }
 };
