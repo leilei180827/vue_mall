@@ -12,10 +12,10 @@ import { CartNavBar, CartProducts, CartBottomBar } from "./children";
 export default {
   name: "Cart",
   components: { CartNavBar, CartProducts, CartBottomBar },
-  activated() {
-    console.log("cart activated");
-    console.log("refresh");
-  },
+  // activated() {
+  //   console.log("cart activated");
+  //   console.log("refresh");
+  // },
   methods: {}
 };
 </script>

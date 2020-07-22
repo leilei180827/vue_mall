@@ -7,6 +7,7 @@ import "vant/lib/index.css";
 import VueLazyLoad from "vue-lazyload";
 
 Vue.config.productionTip = false;
+Vue.prototype.$bus = new Vue();
 Vue.use(Swipe);
 Vue.use(SwipeItem);
 Vue.use(VueLazyLoad, {

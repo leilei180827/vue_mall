@@ -31,9 +31,6 @@ export default {
   },
   mounted() {
     this.initScroll();
-    // setTimeout(() => {
-    //   this.initScroll();
-    // }, 100);
   },
   methods: {
     initScroll() {
@@ -44,7 +41,6 @@ export default {
         pullUpLoad: this.pullUpLoad,
         probeType: this.probeType
       });
-      console.log(this.scroll);
       this.scroll.on("scroll", pos => {
         this.$emit("scroll", pos);
       });

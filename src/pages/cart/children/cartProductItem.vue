@@ -7,8 +7,8 @@
     </div>-->
     <!-- test vuex -->
     <!-- <div class="image" @click="testVuex"> -->
-      <div class="image" >
-      <img :src="product.imgUrl" alt @load="imageLoad" />
+    <div class="image">
+      <img v-lazy="product.imgUrl" alt />
     </div>
     <div class="infos">
       <div class="title">{{product.title}}</div>
@@ -43,16 +43,15 @@ export default {
   computed: {
     isSelected: function() {
       return this.product.isSelected;
-    },
-
+    }
   },
   methods: {
-    imageLoad() {
-      console.log("image load");
-    },
+    // imageLoad() {
+    //   console.log("image load");
+    // },
     tickClick() {
       this.product.isSelected = !this.product.isSelected;
-    },
+    }
     // testVuex() {
     //   this.$store.state.count++;
     //   console.log("test vue2");

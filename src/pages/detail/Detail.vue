@@ -1,10 +1,6 @@
 <template>
   <div id="detail">
-    <DetailNavBar
-      @tabItemClick="tabItemClick"
-      :titles="titles"
-      :currentIndex="currentIndex"
-    ></DetailNavBar>
+    <DetailNavBar @tabItemClick="tabItemClick" :titles="titles" :currentIndex="currentIndex"></DetailNavBar>
     <Scroll
       :probeType="3"
       :pullUpLoad="true"
@@ -13,12 +9,7 @@
       class="scroll-area"
     >
       <div>
-        <Swiper
-          class="detail-swiper"
-          :swiperImages="swiperImages"
-          @imageLoad="imageLoad"
-          ref="gallery"
-        ></Swiper>
+        <Swiper class="detail-swiper" :swiperImages="swiperImages" ref="gallery"></Swiper>
         <ProductBasicInfo :info="basicInfo"></ProductBasicInfo>
         <ShopInfo :info="shop"></ShopInfo>
         <ProductDetailInfo :info="detailInfo"></ProductDetailInfo>
@@ -27,11 +18,7 @@
         <RecommendInfo :info="recommendList" ref="similar"></RecommendInfo>
       </div>
     </Scroll>
-    <BackToTop
-      class="backtop-area"
-      v-show="isShowBackTop"
-      @backToTop="backToTop"
-    >
+    <BackToTop class="backtop-area" v-show="isShowBackTop" @backToTop="backToTop">
       <img src="~assets/img/common/top.png" alt />
     </BackToTop>
     <BottomBar class="bottom-bar" @addToCart="addToCart"></BottomBar>
@@ -47,18 +34,19 @@ import {
   ProductDetailInfo,
   ProductSizeInfo,
   RecommendInfo,
-  ShopInfo,
+  ShopInfo
 } from "./children";
 import Swiper from "components/common/swiper/Swiper.vue";
 import BackToTop from "components/content/backToTop/BackToTop";
 import Scroll from "components/common/scroll/Scroll";
+import { itemImageLoadListener } from "common/mixin";
 
 import {
   getDetail,
   getRecommend,
   BasicInfo,
   SizeDetail,
-  ShopDetail,
+  ShopDetail
 } from "network/detail.js";
 export default {
   name: "Detail",
@@ -73,8 +61,9 @@ export default {
     BottomBar,
     Swiper,
     BackToTop,
-    Scroll,
+    Scroll
   },
+  mixins: [itemImageLoadListener],
   data() {
     return {
       id: "",
@@ -89,7 +78,7 @@ export default {
       themeTops: [],
       currentIndex: 0,
       isShowBackTop: false,
-      showBackTopBoundary: 1000,
+      showBackTopBoundary: 1000
     };
   },
   methods: {
@@ -99,7 +88,6 @@ export default {
     getDetail(iid) {
       getDetail(iid)
         .then(({ result }) => {
-          console.log(result);
           this.swiperImages = result.itemInfo.topImages;
           this.basicInfo = new BasicInfo(
             result.itemInfo,
@@ -116,18 +104,14 @@ export default {
             this.commentInfo = result.rate.list[0];
           }
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
     },
     getRecommend() {
       getRecommend()
         .then(({ data }) => {
-          console.log(data);
           this.recommendList = data.list;
         })
-        .catch((err) => console.log(err));
-    },
-    imageLoad() {
-      console.log("image loaded");
+        .catch(err => console.log(err));
     },
     backToTop() {
       this.$refs.scrollArea.scrollTo(0, 0, 10);
@@ -154,20 +138,20 @@ export default {
         desc: this.basicInfo.desc,
         price: this.basicInfo.nowPrice,
         count: 1,
-        isSelected: true,
+        isSelected: true
       };
-      this.$store.dispatch("add_to_cart", product).then((res) => {
+      this.$store.dispatch("add_to_cart", product).then(res => {
+        // slot for toast
         console.log(res);
       });
     },
     collectThemeTops() {
       this.themeTops = [];
-      this.titles.map((item) => {
+      this.titles.map(item => {
         this.themeTops.push(this.$refs[item].$el.offsetTop);
       });
       this.themeTops.push(Number.MAX_VALUE);
-      console.log(this.themeTops);
-    },
+    }
   },
   created() {
     this.iid = this.$route.params.iid;
@@ -180,6 +164,9 @@ export default {
   updated() {
     this.collectThemeTops();
   },
+  destroyed() {
+    this.$bus.$off("itemImageLoad", this.imageLoadListener);
+  }
 };
 </script>
 

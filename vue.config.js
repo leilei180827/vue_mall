@@ -7,7 +7,7 @@ module.exports = {
         network: "@/network",
         pages: "@/pages",
         router: "@/router",
-        utils: "@/utils",
+        common: "@/common",
         content: "components/content",
       },
     },

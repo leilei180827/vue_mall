@@ -1,7 +1,7 @@
 <template>
   <div class="product-item" @click="productClick">
     <!-- <img  :src="getImage" alt /> -->
-    <img v-lazy="getImage" :key="getImage" alt />
+    <img v-lazy="getImage" :key="getImage" alt @load="itemImageLoad" />
     <div class="product-text">
       <p>{{ productItem.title }}</p>
       <span class="price">￥{{ productItem.price }}</span>
@@ -18,25 +18,26 @@ export default {
       type: Object,
       default() {
         return {};
-      },
-    },
+      }
+    }
   },
   computed: {
     getImage() {
-      console.log(this.productItem);
       return (
         this.productItem.img ||
         this.productItem.image ||
         this.productItem.show.img
       );
-    },
+    }
   },
   methods: {
     productClick() {
-      console.log(this.productItem.iid);
       this.$router.push("/detail/" + this.productItem.iid);
     },
-  },
+    itemImageLoad() {
+      this.$bus.$emit("itemImageLoad");
+    }
+  }
 };
 </script>
 

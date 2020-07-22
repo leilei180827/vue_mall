@@ -17,8 +17,8 @@
       :data="products[currentType].list"
     >
       <div>
-        <Swiper :swiperImages="banners" @imageLoad="imageLoad"></Swiper>
-        <HomeFeatures :recommends="features" @imageLoad="imageLoad"></HomeFeatures>
+        <Swiper :swiperImages="banners" @imageLoad="compsImageLoad"></Swiper>
+        <HomeFeatures :recommends="features" @imageLoad="compsImageLoad"></HomeFeatures>
         <HomeRecommend></HomeRecommend>
         <TabControl :titles="['pop','sell','new']" @tabItemClick="tabItemClick" ref="tabControl"></TabControl>
         <Products :products="products[currentType].list"></Products>
@@ -41,7 +41,8 @@ import BackToTop from "components/content/backToTop/BackToTop.vue";
 import TabControl from "components/content/tabControl/TabControl.vue";
 
 import { getMultiData, getProductsData } from "network/home.js";
-import { POP, SELL, NEW } from "utils/constants";
+import { POP, SELL, NEW } from "common/constants";
+import { itemImageLoadListener } from "common/mixin.js";
 
 export default {
   name: "Home",
@@ -55,6 +56,7 @@ export default {
     BackToTop,
     TabControl
   },
+  mixins: [itemImageLoadListener],
   data() {
     return {
       banners: [],
@@ -75,12 +77,14 @@ export default {
     this.getMultiData();
     Object.keys(this.products).map(item => this.getProductsData(item));
   },
+  deactivated() {
+    this.$bus.$off("itemImageLoad", this.imageLoadListener);
+  },
   methods: {
     getMultiData() {
       getMultiData()
         .then(({ data }) => {
           data.banner.list.map(item => this.banners.push(item.image));
-          // this.banners = data.banner.list;
           data.recommend.list.map(item =>
             this.features.push({
               image: item.image,
@@ -88,7 +92,6 @@ export default {
               link: item.link
             })
           );
-          // this.recommends = data.recommend.list;
         })
         .catch(err => console.log(err));
     },
@@ -97,7 +100,6 @@ export default {
         .then(({ data: { list } }) => {
           this.products[type].page += 1;
           this.products[type].list.push(...list);
-          console.log(this.products[type].list);
         })
         .catch(err => {
           console.log(err);
@@ -118,8 +120,8 @@ export default {
           break;
       }
     },
+
     backToTop() {
-      // console.log("click on backtotop");
       this.$refs.scrollArea.scrollTo(0, 0, 10);
     },
     scrollMove(pos) {
@@ -127,15 +129,14 @@ export default {
       this.isTabControlFixed = pos.y < -1 * this.$refs.tabControl.$el.offsetTop;
     },
     scrollPullingUp() {
-      console.log("upload");
       this.getProductsData(this.currentType);
       this.$refs.scrollArea.finishPullingUp();
       setTimeout(() => {
         this.$refs.scrollArea.refresh();
       }, 20);
     },
-    imageLoad() {
-      console.log("image loaded");
+    compsImageLoad() {
+      this.$refs.scrollArea.refresh();
     }
   }
 };

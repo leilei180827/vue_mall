@@ -23,18 +23,9 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      loaded: false
-    };
-  },
   methods: {
     imageLoad() {
-      if (!this.loaded) {
-        this.$emit("imageLoad");
-        this.loaded = true;
-      }
-      return;
+      this.$bus.$emit("itemImageLoad");
     }
   }
 };

@@ -29,17 +29,17 @@ export default {
       default: 8
     }
   },
-  mounted:function() {
+  mounted: function() {
     setTimeout(() => {
       this.autolayout();
     }, 20);
   },
-  updated:function() {
+  updated: function() {
     this.autolayout();
   },
   methods: {
     autolayout() {
-      console.log("autolayout");
+      // console.log("autolayout");
       //   find the grid-view elment and its children
       let gridView = this.$refs.gridView;
       let gridViewChildren = gridView.children;

@@ -7,7 +7,7 @@
     </div>
     <div class="title">{{descImages}}</div>
     <div class="modal-shows">
-      <img :src="item" v-for="(item,index) in images" :key="index" />
+      <img v-lazy="item" v-for="(item,index) in images" :key="index" @load="itemImageLoad" />
     </div>
   </div>
 </template>
@@ -23,6 +23,11 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      imageLoadCounter: 0
+    };
+  },
   computed: {
     images: function() {
       return this.info.detailImage[0].list;
@@ -32,8 +37,8 @@ export default {
     }
   },
   methods: {
-    imageLoad() {
-      console.log("image loaded");
+    itemImageLoad() {
+      this.$bus.$emit("itemImageLoad");
     }
   }
 };

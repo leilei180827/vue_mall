@@ -2,20 +2,12 @@
   <div id="categories">
     <CategoryNavBar></CategoryNavBar>
     <div class="content">
-      <SideMenu
-        :categories="categories"
-        @sideMenuClick="sideMenuClick"
-        class="side-menu"
-      />
-      <Scroll id="sub-menu-scroll" :data="[categoryData]">
+      <SideMenu :categories="categories" @sideMenuClick="sideMenuClick" class="side-menu" />
+      <Scroll id="sub-menu-scroll" :data="[categoryData]" ref="scrollArea">
         <!-- <Scroll id="sub-menu-scroll"> -->
         <div>
           <SubMenuCategory :subCategories="showSubCategories"></SubMenuCategory>
-          <TabControl
-            :titles="titles"
-            @tabItemClick="tabItemClick"
-            ref="tabControl"
-          ></TabControl>
+          <TabControl :titles="titles" @tabItemClick="tabItemClick" ref="tabControl"></TabControl>
           <SubMenuDetail :products="showSubCategoryDetail"></SubMenuDetail>
         </div>
       </Scroll>
@@ -28,15 +20,16 @@ import {
   CategoryNavBar,
   SubMenuCategory,
   SubMenuDetail,
-  SideMenu,
+  SideMenu
 } from "./children";
 import Scroll from "components/common/scroll/Scroll";
 import TabControl from "components/content/tabControl/TabControl";
-import { POP, SELL, NEW } from "utils/constants";
+import { POP, SELL, NEW } from "common/constants";
+import { itemImageLoadListener } from "common/mixin";
 import {
   getCategory,
   getSubCategory,
-  getSubCategoryDetail,
+  getSubCategoryDetail
 } from "network/category.js";
 export default {
   name: "Category",
@@ -46,19 +39,23 @@ export default {
     SubMenuDetail,
     SideMenu,
     Scroll,
-    TabControl,
+    TabControl
   },
+  mixins: [itemImageLoadListener],
   data() {
     return {
       categories: [],
       categoryData: {},
       currentIndex: -1,
       currentTabType: POP,
-      titles: [POP, SELL, NEW],
+      titles: [POP, SELL, NEW]
     };
   },
   created() {
     this._getCategory();
+  },
+  deactivated(){
+    this.$bus.$off("itemImageLoad",this.imageLoadListener)
   },
   computed: {
     showSubCategories: function() {
@@ -72,12 +69,11 @@ export default {
           this.currentTabType
         ];
       }
-    },
+    }
   },
   methods: {
     _getCategory() {
       getCategory().then(({ data }) => {
-        console.log(data);
         this.categories = data.category.list;
         for (let i = 0; i < this.categories.length; i++) {
           this.categoryData[i] = {
@@ -85,8 +81,8 @@ export default {
             subCategoryDetails: {
               [POP]: [],
               [SELL]: [],
-              [NEW]: [],
-            },
+              [NEW]: []
+            }
           };
         }
         this._getSubCategory(0);
@@ -94,7 +90,6 @@ export default {
     },
     _getSubCategory(index) {
       this.currentIndex = index;
-      console.log(this.categories[index].maitKey);
       getSubCategory(this.categories[index].maitKey)
         .then(({ data: { list } }) => {
           this.categoryData[index].subCategories = list;
@@ -103,17 +98,17 @@ export default {
           this._getSubCategoryDetail(index, SELL);
           this._getSubCategoryDetail(index, NEW);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log("sub categories failure:" + err);
         });
     },
     _getSubCategoryDetail(index, type) {
       getSubCategoryDetail(this.categories[index].miniWallkey, type)
-        .then((res) => {
+        .then(res => {
           this.categoryData[index].subCategoryDetails[type] = res;
           this.categoryData = { ...this.categoryData };
         })
-        .catch((err) => {
+        .catch(err => {
           console.log("subcategory detail failure:" + err);
         });
     },
@@ -137,8 +132,8 @@ export default {
         default:
           break;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
