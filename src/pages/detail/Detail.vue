@@ -141,6 +141,7 @@ export default {
         isSelected: true
       };
       this.$store.dispatch("add_to_cart", product).then(res => {
+        this.$toast.show(res, 2000);
         // slot for toast
         console.log(res);
       });

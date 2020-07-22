@@ -40,6 +40,7 @@ export default {
         this.productsInCart.map(item => {
           item.isSelected = false;
         });
+        this.$toast.show("nothing selected");
       } else {
         this.productsInCart.map(item => {
           item.isSelected = true;
