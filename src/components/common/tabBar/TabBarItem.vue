@@ -45,7 +45,7 @@ export default {
   margin-top: 1px;
   margin-bottom: 1px;
   font-weight: 700;
-  font-size:16px;
+  font-size: 16px;
 }
 .item-icon img,
 .item-icon-active img {

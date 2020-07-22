@@ -24,7 +24,7 @@ body {
   -webkit-tap-highlight-color: transparent; /* webkit apple phone */
   background: var(--color-background);
   color: var(--color-text);
-  width: 100vw;
+  width: 100%;
 }
 a {
   color: var(--color-text);

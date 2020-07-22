@@ -8,6 +8,7 @@
         class="side-menu"
       />
       <Scroll id="sub-menu-scroll" :data="[categoryData]">
+        <!-- <Scroll id="sub-menu-scroll"> -->
         <div>
           <SubMenuCategory :subCategories="showSubCategories"></SubMenuCategory>
           <TabControl

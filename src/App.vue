@@ -12,8 +12,8 @@ import MainTabBar from "components/content/mainTabBar/MainTabBar.vue";
 export default {
   name: "App",
   components: {
-    MainTabBar
-  }
+    MainTabBar,
+  },
 };
 </script>
 
@@ -22,4 +22,4 @@ export default {
 #app {
   position: relative;
 }
-</style> 
+</style>
