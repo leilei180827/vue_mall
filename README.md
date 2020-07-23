@@ -1,4 +1,8 @@
 # vue-mall
+This is a mobile side e-commerce web based on Vue imitating a popular mall App named 'mogu' in China.
+It is a frontend program requesting data from existed APIs.
+
+Also, if you are interested in having a look at the web, please use/adjust screen with/to mobile size after you've launched it
 
 ## Project setup
 ```
@@ -20,5 +24,4 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
