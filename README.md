@@ -2,7 +2,7 @@
 
 This is a mobile side e-commerce web based on Vue imitating a popular mall App named 'mogu' in China.
 It is a frontend program requesting data from existed APIs.
-available at:meek-curtain.surge.sh
+available at:http://wasteful-mask.surge.sh/
 
 Also, if you are interested in having a look at the web, please use/adjust screen with/to mobile size after you've launched it
 
