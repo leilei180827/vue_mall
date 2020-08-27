@@ -13,7 +13,7 @@ Vue.use(Swipe);
 Vue.use(SwipeItem);
 Vue.use(VueLazyLoad, {
   preLoad: 1,
-  loading: require("assets/img/common/placeholder.png"),
+  loading: require("assets/img/common/placeholder_loading.gif"),
 });
 Vue.use(toast);
 new Vue({
